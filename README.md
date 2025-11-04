@@ -1,8 +1,10 @@
 # stimshot
 
+[![CI](https://github.com/vajahath/stimshot/actions/workflows/ci.yml/badge.svg)](https://github.com/vajahath/stimshot/actions/workflows/ci.yml)
+
 <img src="stimshot.jpg" alt="stimshot-banner" width="500"/>
 
-A dead-simple, modern, and lightweight Dependency Injection library for TypeScript.
+A dead-simple, modern, and lightweight (~4kb) Dependency Injection library for TypeScript.
 
 ### **Why another DI framework?**
 
