@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/complexity/noBannedTypes: <some cases need this> */
 /** biome-ignore-all lint/suspicious/noExplicitAny: <ome cases need this> */
 
-// --- clear-syringe ---
+// --- stimshot ---
 // A dead-simple, modern, and lightweight DI library for TypeScript.
 
 // --- Internal Types and State ---
@@ -65,7 +65,7 @@ function register<T>(
 	if (container.has(ctor)) {
 		// Allows re-registering, which can be useful for HMR (Hot Module Replacement)
 		console.warn(
-			`[clear-syringe] Warning: Class ${ctor.name} is being re-registered.`,
+			`[stimshot] Warning: Class ${ctor.name} is being re-registered.`,
 		);
 	}
 
@@ -83,7 +83,7 @@ function register<T>(
  * Throws a formatted error.
  */
 function throwError(message: string): never {
-	throw new Error(`[clear-syringe] ${message}`);
+	throw new Error(`[stimshot] ${message}`);
 }
 
 // --- Public API ---

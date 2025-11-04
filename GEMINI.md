@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project is a lightweight, modern, and dependency-free Dependency Injection (DI) library for TypeScript called `clear-syringe`. It is designed to be simple, explicit, and easy to use, without requiring any special TypeScript compiler flags like `experimentalDecorators` or `emitDecoratorMetadata`.
+This project is a lightweight, modern, and dependency-free Dependency Injection (DI) library for TypeScript called `stimshot`. It is designed to be simple, explicit, and easy to use, without requiring any special TypeScript compiler flags like `experimentalDecorators` or `emitDecoratorMetadata`.
 
 The library provides a minimal API consisting of two decorators (`@shared` and `@fresh`) and three functions (`resolve`, `replace`, and `reset`). The core logic is contained in a single file, `src/index.ts`.
 
@@ -56,13 +56,13 @@ The codebase follows standard TypeScript best practices. The code is well-docume
 
 The project uses `vitest` for testing. The tests are located in the `tests` directory. The existing test file, `tests/index.test.ts`, is a placeholder and should be updated to include comprehensive tests for the library.
 
-Here is an example of how you could write a test for the `clear-syringe` library in `tests/index.test.ts`:
+Here is an example of how you could write a test for the `stimshot` library in `tests/index.test.ts`:
 
 ```typescript
 import { expect, test, describe, beforeEach, afterEach } from 'vitest';
 import { shared, fresh, resolve, replace, reset } from '../src';
 
-describe('clear-syringe', () => {
+describe('stimshot', () => {
   afterEach(() => {
     reset();
   });

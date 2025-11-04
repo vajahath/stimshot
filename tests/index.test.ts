@@ -3,7 +3,7 @@
 import { afterEach, describe, expect, test, vi } from "vitest";
 import { fresh, replace, reset, resolve, shared } from "../src";
 
-describe("clear-syringe", () => {
+describe("stimshot", () => {
 	// Reset the container after each test to ensure isolation.
 	afterEach(() => {
 		reset();
@@ -105,13 +105,13 @@ describe("clear-syringe", () => {
 
 	test("should throw an error when resolving an unregistered class", () => {
 		expect(() => resolve(NotRegisteredService)).toThrow(
-			"[clear-syringe] Resolution error: Class NotRegisteredService is not registered. Did you forget to add @shared() or @fresh()?",
+			"[stimshot] Resolution error: Class NotRegisteredService is not registered. Did you forget to add @shared() or @fresh()?",
 		);
 	});
 
 	test("should throw an error when replacing an unregistered class", () => {
 		expect(() => replace(NotRegisteredService, { useValue: {} })).toThrow(
-			"[clear-syringe] Replacement error: Cannot replace NotRegisteredService because it is not registered.",
+			"[stimshot] Replacement error: Cannot replace NotRegisteredService because it is not registered.",
 		);
 	});
 
@@ -131,13 +131,13 @@ describe("clear-syringe", () => {
 		}
 
 		expect(() => resolve(CircularA)).toThrow(
-			"[clear-syringe] Circular dependency detected: CircularA -> CircularB -> CircularA",
+			"[stimshot] Circular dependency detected: CircularA -> CircularB -> CircularA",
 		);
 	});
 
 	test("should throw an error if replace is called without a provider", () => {
 		expect(() => replace(SharedService, {} as any)).toThrow(
-			`[clear-syringe] Replacement error: You must provide 'useClass', 'useValue', or 'useFactory' when replacing SharedService.`,
+			`[stimshot] Replacement error: You must provide 'useClass', 'useValue', or 'useFactory' when replacing SharedService.`,
 		);
 	});
 
@@ -151,7 +151,7 @@ describe("clear-syringe", () => {
 		}
 
 		expect(() => resolve(FailingService)).toThrow(
-			`[clear-syringe] Error creating instance of FailingService: ${errorMessage}`,
+			`[stimshot] Error creating instance of FailingService: ${errorMessage}`,
 		);
 	});
 
@@ -181,14 +181,14 @@ describe("clear-syringe", () => {
 		expect(() => {
 			// @ts-ignore - Intentionally misusing decorator for test
 			shared()(class {}, { kind: "method", name: "test" });
-		}).toThrow("[clear-syringe] @shared can only be used on classes.");
+		}).toThrow("[stimshot] @shared can only be used on classes.");
 	});
 
 	test("@fresh should throw if not used on a class", () => {
 		expect(() => {
 			// @ts-ignore - Intentionally misusing decorator for test
 			fresh()(class {}, { kind: "field", name: "test" });
-		}).toThrow("[clear-syringe] @fresh can only be used on classes.");
+		}).toThrow("[stimshot] @fresh can only be used on classes.");
 	});
 
 	// --- Re-registration Test ---
@@ -206,7 +206,7 @@ describe("clear-syringe", () => {
 		shared()(ServiceToReload, { kind: "class", name: "ServiceToReload" });
 
 		expect(warnSpy).toHaveBeenCalledWith(
-			"[clear-syringe] Warning: Class ServiceToReload is being re-registered.",
+			"[stimshot] Warning: Class ServiceToReload is being re-registered.",
 		);
 
 		warnSpy.mockRestore();

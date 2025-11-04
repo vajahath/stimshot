@@ -1,6 +1,8 @@
-# clear-syringe
+# stimshot
 
-A dead-simple, modern, and lightweight Dependency Injection 💉 library for TypeScript.
+<img src="stimshot.jpg" alt="stimshot-banner" width="500"/>
+
+A dead-simple, modern, and lightweight Dependency Injection library for TypeScript.
 
 ### **Why another DI framework?**
 
@@ -8,7 +10,7 @@ Many existing DI libraries for TypeScript rely on the older "experimental" decor
 
 This can lead to a fragile, guess-work setup.
 
-clear-syringe was built with a different philosophy:
+stimshot was built with a different philosophy:
 
 * **Explicit & Guess-less:** No magic strings, no fragile type-reflection. You explicitly ask for what you need.  
 * **Weightless:** The entire library is one small file with no dependencies.  
@@ -36,7 +38,7 @@ Using a DI pattern is a cornerstone of modern software design. It helps you buil
 ### **Installation**
 
 ```
-npm install clear-syringe
+npm install stimshot
 ```
 
 ### **Basic Usage**
@@ -47,7 +49,7 @@ The design is simple:
 2. **Resolve** your dependencies using `resolve()`.
 
 ```typescript
-import { resolve, shared, fresh } from 'clear-syringe';
+import { resolve, shared, fresh } from 'stimshot';
 
 @shared()
 class Chip {
@@ -79,10 +81,10 @@ phone.getSpecs();
 
 ### **Testing with Mocks**
 
-`clear-syringe` makes it trivial to replace dependencies in your tests.
+`stimshot` makes it trivial to replace dependencies in your tests.
 
 ```typescript
-import { resolve, shared, replace, reset } from 'clear-syringe';
+import { resolve, shared, replace, reset } from 'stimshot';
 
 @shared()
 class Chip {
@@ -131,3 +133,7 @@ You can also replace with a simple object (`useValue`) or a function (`useFactor
   * options.useValue: Replaces with a specific value (e.g., a mock object).  
   * options.useFactory: Replaces with a function that returns the instance.  
 * **reset()**: Used for testing. Resets the entire container, clearing all shared instances and removing all replacements, restoring the original configuration.
+
+# License
+
+MIT &copy; 2025 Vajahath Ahmed

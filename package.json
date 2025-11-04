@@ -1,16 +1,16 @@
 {
-	"name": "clear-syringe",
+	"name": "stimshot",
 	"version": "0.0.0",
 	"description": "A dead-simple, modern, and lightweight Dependency Injection library for TypeScript",
 	"type": "module",
 	"license": "MIT",
-	"homepage": "https://github.com/vajahath/clear-syringe#readme",
+	"homepage": "https://github.com/vajahath/stimshot#readme",
 	"bugs": {
-		"url": "https://github.com/vajahath/clear-syringe/issues"
+		"url": "https://github.com/vajahath/stimshot/issues"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/vajahath/clear-syringe.git"
+		"url": "git+https://github.com/vajahath/stimshot.git"
 	},
 	"author": "Vajahath Ahmed <vajuoff.1@gmail.com>",
 	"files": [
