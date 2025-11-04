@@ -9,10 +9,10 @@
 /**
  * Options for replacing a dependency during testing.
  */
-export interface ReplaceOptions<T = unknown> {
+export interface ReplaceOptions<T = any> {
 	/** Provide a specific class to use. */
 	useClass?: new (
-		...args: unknown[]
+		...args: any[]
 	) => T;
 	/** Provide a specific value (object, mock) to use. */
 	useValue?: T;
@@ -26,7 +26,7 @@ export interface ReplaceOptions<T = unknown> {
 interface RegistrationEntry<T = any> {
 	/** The original class constructor. */
 	ctor: new (
-		...args: unknown[]
+		...args: any[]
 	) => T;
 
 	/** The lifetime of the instance. */
@@ -59,7 +59,7 @@ const resolutionStack = new Set<Function>();
  * A shared registration function for decorators.
  */
 function register<T>(
-	ctor: new (...args: unknown[]) => T,
+	ctor: new (...args: any[]) => T,
 	lifetime: "shared" | "fresh",
 ) {
 	if (container.has(ctor)) {
@@ -94,7 +94,7 @@ function throwError(message: string): never {
  */
 export function shared() {
 	return (
-		target: new (...args: unknown[]) => unknown,
+		target: new (...args: any[]) => any,
 		context: ClassDecoratorContext,
 	) => {
 		if (context.kind !== "class") {
@@ -110,7 +110,7 @@ export function shared() {
  */
 export function fresh() {
 	return (
-		target: new (...args: unknown[]) => unknown,
+		target: new (...args: any[]) => any,
 		context: ClassDecoratorContext,
 	) => {
 		if (context.kind !== "class") {
@@ -126,7 +126,7 @@ export function fresh() {
  * @param token The class constructor to resolve.
  * @returns An instance of the requested class.
  */
-export function resolve<T>(token: new (...args: unknown[]) => T): T {
+export function resolve<T>(token: new (...args: any[]) => T): T {
 	const registration = container.get(token);
 
 	if (!registration) {
@@ -151,7 +151,7 @@ export function resolve<T>(token: new (...args: unknown[]) => T): T {
 		let newInstance: T;
 		try {
 			newInstance = registration.currentFactory();
-		} catch (err: unknown) {
+		} catch (err: any) {
 			return throwError(
 				`Error creating instance of ${token.name}: ${(err as Error).message}`,
 			);
@@ -193,8 +193,7 @@ export function replace<T>(
 	if (options.useValue !== undefined) {
 		newFactory = () => options.useValue as T;
 	} else if (options.useClass) {
-		newFactory = () =>
-			resolve(options.useClass as new (...args: unknown[]) => T);
+		newFactory = () => resolve(options.useClass as new (...args: any[]) => T);
 	} else if (options.useFactory) {
 		newFactory = options.useFactory;
 	} else {
