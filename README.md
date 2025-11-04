@@ -61,9 +61,9 @@ The design is simple:
 2. **Resolve** your dependencies using `resolve()`.
 
 ```typescript
-import { resolve, shared, fresh } from 'stimshot';
+import { resolve, shared } from 'stimshot';
 
-@shared()
+@shared() // Means singleton
 class Chip {
   public readonly name = "tensor";
 }
@@ -135,15 +135,15 @@ You can also replace with a simple object (`useValue`) or a function (`useFactor
 #### **Decorators**
 
 * **`@shared()`**: Class decorator. Registers the class as a "singleton." A single instance will be created on the first resolve and shared for all subsequent calls (This is what you usually want).
-* **`@fresh()`**: Class decorator. Registers the class as a "prototype." A new instance will be created *every time* it is resolved.
+* **`@fresh()`**: Class decorator. A new instance will be created *every time* it is resolved.
 
 #### **Functions**
 
 * **`resolve(Token)`**: Resolves a dependency from the container. Token is the class constructor (e.g., resolve(Database)).  
 * **`replace(Token, options)`**: Used for testing. Replaces the registered Token with a mock implementation.  
-  * options.useClass: Replaces with another registered class.  
-  * options.useValue: Replaces with a specific value (e.g., a mock object).  
-  * options.useFactory: Replaces with a function that returns the instance.  
+  * `options.useClass`: Replaces with another registered class.  
+  * `options.useValue`: Replaces with a specific value (e.g., a mock object).  
+  * `options.useFactory`: Replaces with a function that returns the instance.  
 * **`reset()`**: Used for testing. Resets the entire container, clearing all shared instances and removing all replacements, restoring the original configuration.
 
 # License
