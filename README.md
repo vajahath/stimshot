@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/vajahath/stimshot/actions/workflows/ci.yml/badge.svg)](https://github.com/vajahath/stimshot/actions/workflows/ci.yml)
 
-<img src="stimshot.jpg" alt="stimshot-banner" width="500"/>
+<img src="https://github.com/vajahath/stimshot/raw/main/stimshot.jpg" alt="stimshot-banner" width="500"/>
 
 A dead-simple, modern, and lightweight (~4kb) Dependency Injection library for TypeScript.
 
