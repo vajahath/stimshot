@@ -8,18 +8,20 @@ A dead-simple, modern, and lightweight (~4kb) Dependency Injection library for T
 
 ### **Why another DI framework?**
 
-Many existing DI libraries for TypeScript rely on the older "experimental" decorators and reflection libraries like reflect-metadata. This approach forces you to enable emitDecoratorMetadata in your tsconfig.json, which depends on TypeScript's type-information—information that is erased at compile time.
+Stimshot was inspired from InversifyJS, Tsyringe, InjectionJS (outsize the context of Angular). These libraries have some fundamental issues when used with modern TypeScript.
 
-This can lead to a fragile, guess-work setup.
+Many existing DI libraries for TypeScript rely on the older experimental decorators and reflection libraries like `reflect-metadata`. This approach forces you to enable `emitDecoratorMetadata` in your `tsconfig.json`, which depends on TypeScript's type-information—information that is erased at compile time.
 
-stimshot was built with a different philosophy:
+Often this leads to runtime errors, especially when using the new [`import type` syntax](https://www.google.com/search?q=typescript+import+type+syntax). Most DI libraries were not designed with this in mind, and as a result, they fail to resolve dependencies correctly and lead to runtime issues.
 
-* **Explicit & Guess-less:** No magic strings, no fragile type-reflection. You explicitly ask for what you need.  
+Stimshot was built with a different philosophy:
+
+* **Explicit & Guess-less:** No magic strings, no fragile type-reflection. You explicitly ask for what you need. What you see is what you get. 
 * **Weightless:** The entire library is one small file with no dependencies.  
 * **Modern:** Built for modern TypeScript (5.0+) using standard Stage 3 Decorators.  
 * **Simple APIs:** The API surface is tiny, intuitive, and easy to understand.
 
-This library **does not** use or require reflect-metadata or experimentalDecorators like other DI libraries.
+This library **does not** use or require `reflect-metadata` or `experimentalDecorators` or `emitDecoratorMetadata` like other DI libraries.
 
 ### **Why Use Dependency Injection?**
 
@@ -124,17 +126,17 @@ You can also replace with a simple object (`useValue`) or a function (`useFactor
 
 #### **Decorators**
 
-* **@shared()**: Class decorator. Registers the class as a "singleton." A single instance will be created on the first resolve and shared for all subsequent calls.  
-* **@fresh()**: Class decorator. Registers the class as a "prototype." A new instance will be created *every time* it is resolved.
+* **`@shared()`**: Class decorator. Registers the class as a "singleton." A single instance will be created on the first resolve and shared for all subsequent calls (This is what you usually want).
+* **`@fresh()`**: Class decorator. Registers the class as a "prototype." A new instance will be created *every time* it is resolved.
 
 #### **Functions**
 
-* **resolve(Token)**: Resolves a dependency from the container. Token is the class constructor (e.g., resolve(Database)).  
-* **replace(Token, options)**: Used for testing. Replaces the registered Token with a mock implementation.  
+* **`resolve(Token)`**: Resolves a dependency from the container. Token is the class constructor (e.g., resolve(Database)).  
+* **`replace(Token, options)`**: Used for testing. Replaces the registered Token with a mock implementation.  
   * options.useClass: Replaces with another registered class.  
   * options.useValue: Replaces with a specific value (e.g., a mock object).  
   * options.useFactory: Replaces with a function that returns the instance.  
-* **reset()**: Used for testing. Resets the entire container, clearing all shared instances and removing all replacements, restoring the original configuration.
+* **`reset()`**: Used for testing. Resets the entire container, clearing all shared instances and removing all replacements, restoring the original configuration.
 
 # License
 

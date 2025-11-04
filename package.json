@@ -1,7 +1,7 @@
 {
 	"name": "stimshot",
 	"version": "0.0.0",
-	"description": "A dead-simple, modern, and lightweight Dependency Injection library for TypeScript",
+	"description": "A dead-simple, modern, and lightweight (~4kb) Dependency Injection library for TypeScript",
 	"type": "module",
 	"license": "MIT",
 	"homepage": "https://github.com/vajahath/stimshot#readme",
@@ -29,7 +29,8 @@
 		"test": "vitest run",
 		"typecheck": "tsc --noEmit",
 		"lint": "biome check --write",
-		"lint:ci": "biome ci"
+		"lint:ci": "biome ci",
+		"prepublishOnly": "npm run build && npm run typecheck && npm run lint:ci && npm run test"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.3",
