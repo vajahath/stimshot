@@ -1,14 +1,14 @@
 # stimshot
 
-[![CI](https://github.com/vajahath/stimshot/actions/workflows/ci.yml/badge.svg)](https://github.com/vajahath/stimshot/actions/workflows/ci.yml)
+[![CI](https://github.com/vajahath/stimshot/actions/workflows/ci.yml/badge.svg)](https://github.com/vajahath/stimshot/actions/workflows/ci.yml) ![minified size](https://badgen.net/bundlephobia/min/stimshot) ![minified gzipped size](https://badgen.net/bundlephobia/minzip/stimshot) ![tree shaking support](https://badgen.net/bundlephobia/tree-shaking/stimshot)
 
 <img src="https://github.com/vajahath/stimshot/raw/main/stimshot.jpg" alt="stimshot-banner" width="500"/>
 
-A dead-simple, modern, and lightweight (~4kb) Dependency Injection library for TypeScript.
+A dead-simple, modern, and lightweight (~2kb) Dependency Injection library for TypeScript.
 
 ### **Why another DI framework?**
 
-Stimshot was inspired from InversifyJS, Tsyringe, InjectionJS (outsize the context of Angular). These libraries have some fundamental issues when used with modern TypeScript.
+Stimshot was inspired from InversifyJS, Tsyringe, InjectionJS (outside the context of Angular). These libraries have some fundamental issues when used with modern TypeScript.
 
 Many existing DI libraries for TypeScript rely on the older experimental decorators and reflection libraries like `reflect-metadata`. This approach forces you to enable `emitDecoratorMetadata` in your `tsconfig.json`, which depends on TypeScript's type-information—information that is erased at compile time.
 
@@ -23,6 +23,14 @@ Stimshot was built with a different philosophy:
 
 This library **does not** use or require `reflect-metadata` or `experimentalDecorators` or `emitDecoratorMetadata` like other DI libraries.
 
+### Comparison with Other Libraries
+
+| Feature                     | stimshot | InversifyJS | Tsyringe | InjectionJS |
+|-----------------------------|:--------:|:-----------:|:--------:|:-----------:
+| reflect-metadata    |   ✅ Not needed   |      Yes ![minified size](https://badgen.net/bundlephobia/min/reflect-metadata)    |    Yes ![minified size](https://badgen.net/bundlephobia/min/reflect-metadata)    |      Yes ![minified size](https://badgen.net/bundlephobia/min/reflect-metadata)     |
+| Library size  | ✅ ![minified size](https://badgen.net/bundlephobia/min/stimshot)     | ![minified size](https://badgen.net/bundlephobia/min/inversify)       | ![minified size](https://badgen.net/bundlephobia/min/tsyringe)  | ![minified size](https://badgen.net/bundlephobia/min/injection-js)  |
+| Modern TypeScript Support | ✅ Yes | No | Partial | No |
+| Extensive feature set | Only core features | ✅ | ✅ | ✅ |
 ### **Why Use Dependency Injection?**
 
 Using a DI pattern is a cornerstone of modern software design. It helps you build:
@@ -35,7 +43,7 @@ Using a DI pattern is a cornerstone of modern software design. It helps you buil
 
 * ✅ **Modern TypeScript:** Uses standard Stage 3 decorators (available in TS 5.0+).  
 * ❌ **No reflect-metadata:** No hacks or reliance on fragile type information.  
-* ❌ **No experimentalDecorators:** No tsconfig.json flags required.  
+* ❌ **No experimentalDecorators:** Uses modern typescript's stage 3 decorators.  
 * 🧠 **Simple API:** A minimal set of 5 functions: @shared, @fresh, resolve, replace, and reset.  
 * 🧪 **Testable by Design:** replace and reset make unit testing trivial and safe.
 
