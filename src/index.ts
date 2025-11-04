@@ -175,8 +175,7 @@ export function replace<T>(
   if (options.useValue !== undefined) {
     newFactory = () => options.useValue as T;
   } else if (options.useClass) {
-    // Defer resolution of the replacement class
-    newFactory = () => resolve(options.useClass);
+    newFactory = () => resolve(options.useClass as new (...args: any[]) => T);
   } else if (options.useFactory) {
     newFactory = options.useFactory;
   } else {
