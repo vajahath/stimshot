@@ -1,18 +1,18 @@
 {
-  "name": "tsdown-starter",
+  "name": "clear-syringe",
   "version": "0.0.0",
-  "description": "A starter for creating a TypeScript package.",
+  "description": "A dead-simple, modern, and lightweight Dependency Injection library for TypeScript",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://github.com/author/library#readme",
+  "homepage": "https://github.com/vajahath/clear-syringe#readme",
   "bugs": {
-    "url": "https://github.com/author/library/issues"
+    "url": "https://github.com/vajahath/clear-syringe/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/author/library.git"
+    "url": "git+https://github.com/vajahath/clear-syringe.git"
   },
-  "author": "Author Name <author.name@mail.com>",
+  "author": "Vajahath Ahmed <vajuoff.1@gmail.com>",
   "files": [
     "dist"
   ],
@@ -26,7 +26,7 @@
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown --watch",
-    "test": "vitest",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

@@ -1,10 +1,12 @@
-# **💉 clear-syringe**
+# clear-syringe
 
-A dead-simple, modern, and lightweight Dependency Injection library for TypeScript.
+A dead-simple, modern, and lightweight Dependency Injection 💉 library for TypeScript.
 
 ### **Why another DI framework?**
 
-Most existing DI libraries for TypeScript are complex, require unstable compiler flags, or rely on outdated reflection libraries.
+Many existing DI libraries for TypeScript rely on the older "experimental" decorators and reflection libraries like reflect-metadata. This approach forces you to enable emitDecoratorMetadata in your tsconfig.json, which depends on TypeScript's type-information—information that is erased at compile time.
+
+This can lead to a fragile, guess-work setup.
 
 clear-syringe was built with a different philosophy:
 
@@ -13,7 +15,7 @@ clear-syringe was built with a different philosophy:
 * **Modern:** Built for modern TypeScript (5.0+) using standard Stage 3 Decorators.  
 * **Simple APIs:** The API surface is tiny, intuitive, and easy to understand.
 
-This library **does not** use or require reflect-metadata or experimentalDecorators. You don't need to change *any* flags in your tsconfig.json.
+This library **does not** use or require reflect-metadata or experimentalDecorators like other DI libraries.
 
 ### **Why Use Dependency Injection?**
 
@@ -33,91 +35,86 @@ Using a DI pattern is a cornerstone of modern software design. It helps you buil
 
 ### **Installation**
 
+```
 npm install clear-syringe
+```
 
 ### **Basic Usage**
 
 The design is simple:
 
-1. **Decorate** your classes with @shared() (for singletons) or @fresh() (for new instances).  
-2. **Resolve** your dependencies using resolve().
+1. **Decorate** your classes with `@shared()` (for singletons (shared instances)) or `@fresh()` (for new instances).  
+2. **Resolve** your dependencies using `resolve()`.
 
+```typescript
 import { resolve, shared, fresh } from 'clear-syringe';
 
-// This class will be a "singleton"  
-// One instance will be created and shared.  
-@shared()  
-class Database {  
-  connect() {  
-    console.log('Connected to DB');  
-  }  
+@shared()
+class Chip {
+  public readonly name = "tensor";
 }
 
-// This class will be "prototype"  
-// A new instance is created every time it's resolved.  
-@fresh()  
-class UserService {  
-  // Dependencies are resolved as properties are initialized  
-  db \= resolve(Database);
-
-  getUser(id: string) {  
-    this.db.connect();  
-    return { id, name: 'Test User' };  
-  }  
+@shared()
+class Screen {
+  public readonly dpi = 441;
 }
 
-// \--- In your application's entry point \---
+@shared()
+class Phone {
+  private readonly chip = resolve(Chip); // Define dependency like this
 
-// 1\. Resolve the UserService  
-const userService1 \= resolve(UserService);  
-const user \= userService1.getUser('123');
+  constructor(
+    public readonly screen = resolve(Screen) // Or like this
+  ){}
 
-// 2\. Resolve it again  
-const userService2 \= resolve(UserService);
+  getSpecs() {
+    return `Phone with ${this.chip.name} chip and ${this.screen.dpi} DPI screen.`;
+  }
+}
 
-// \--- Results \---  
-// userService1.db \=== userService2.db  (true \- Database is @shared)  
-// userService1 \=== userService2        (false \- UserService is @fresh)
+// --- Then to make Phone instance ---
+const phone = resolve(Phone); // Don't use 'new Phone()' method!
+phone.getSpecs();
+```
 
 ### **Testing with Mocks**
 
-clear-syringe makes it trivial to replace dependencies in your tests.
+`clear-syringe` makes it trivial to replace dependencies in your tests.
 
-import { resolve, shared, replace, reset } from 'clear-syringe';  
-import { UserService } from './UserService';  
-import { Database } from './Database';
+```typescript
+import { resolve, shared, replace, reset } from 'clear-syringe';
 
-// 1\. Create a mock class  
-@shared() // Mocks can also be shared\!  
-class MockDatabase {  
-  connect() {  
-    console.log('Connected to MOCK DB');  
-  }  
+@shared()
+class Chip {
+  public readonly name = "tensor";
 }
 
-// 2\. In your test setup (e.g., beforeEach)  
-beforeEach(() \=\> {  
-  // Replace the \*real\* Database with the \*mock\* one  
-  replace(Database, { useClass: MockDatabase });  
-});
+@shared()
+class Phone {
+  private readonly chip = resolve(Chip); // Define dependency like this
 
-// 3\. In your test teardown (e.g., afterEach)  
-afterEach(() \=\> {  
-  // Restore all original classes  
-  reset();  
-});
+  getSpecs() {
+    return `Phone with ${this.chip.name} chip`;
+  }
+}
+// --- In your test setup ---
+// I want to test the Phone class logic without using the real Chip class.
+// This is a good practice in unit testing to isolate the class under test.
+// So now Chip class will not interfere with our Phone tests.
 
-// 4\. Run your test  
-test('UserService should use the mock database', () \=\> {  
-  const userService \= resolve(UserService);  
-    
-  // This will call connect() on MockDatabase, not the real one.  
-  const user \= userService.getUser('456');
+// Create a mock implementation for Chip
+@shared()
+class MockChip {
+  public readonly name = "mock-tensor";
+}
 
-  expect(user.id).toBe('456');  
-});
+replace(Chip, { useClass: MockChip }); // Replace Chip with MockChip
 
-You can also replace with a simple object (useValue) or a function (useFactory).
+const phone = resolve(Phone); // Resolve Phone, which now uses MockChip
+console.log(phone.getSpecs()); // Outputs: Phone with mock-tensor chip
+```
+
+You can also replace with a simple object (`useValue`) or a function (`useFactory`).
 
 ### **API Reference**
 

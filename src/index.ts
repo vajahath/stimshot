@@ -6,9 +6,9 @@
 /**
  * Options for replacing a dependency during testing.
  */
-export interface ReplaceOptions<T = any> {
+export interface ReplaceOptions<T = unknown> {
   /** Provide a specific class to use. */
-  useClass?: new (...args: any[]) => T;
+  useClass?: new (...args: unknown[]) => T;
   /** Provide a specific value (object, mock) to use. */
   useValue?: T;
   /** Provide a factory function to create the instance. */
@@ -20,7 +20,7 @@ export interface ReplaceOptions<T = any> {
  */
 interface RegistrationEntry<T = any> {
   /** The original class constructor. */
-  ctor: new (...args: any[]) => T;
+  ctor: new (...args: unknown[]) => T;
   
   /** The lifetime of the instance. */
   lifetime: 'shared' | 'fresh';
@@ -52,7 +52,7 @@ const resolutionStack = new Set<Function>();
  * A shared registration function for decorators.
  */
 function register<T>(
-  ctor: new (...args: any[]) => T,
+  ctor: new (...args: unknown[]) => T,
   lifetime: 'shared' | 'fresh'
 ) {
   if (container.has(ctor)) {
@@ -84,7 +84,7 @@ function throwError(message: string): never {
  * One instance will be created and shared across all injectors.
  */
 export function shared() {
-  return (target: new (...args: any[]) => any, context: ClassDecoratorContext) => {
+  return (target: new (...args: unknown[]) => unknown, context: ClassDecoratorContext) => {
     if (context.kind !== 'class') {
       throwError('@shared can only be used on classes.');
     }
@@ -97,7 +97,7 @@ export function shared() {
  * A new instance will be created every time it's resolved.
  */
 export function fresh() {
-  return (target: new (...args: any[]) => any, context: ClassDecoratorContext) => {
+  return (target: new (...args: unknown[]) => unknown, context: ClassDecoratorContext) => {
     if (context.kind !== 'class') {
       throwError('@fresh can only be used on classes.');
     }
@@ -111,7 +111,7 @@ export function fresh() {
  * @param token The class constructor to resolve.
  * @returns An instance of the requested class.
  */
-export function resolve<T>(token: new (...args: any[]) => T): T {
+export function resolve<T>(token: new (...args: unknown[]) => T): T {
   const registration = container.get(token);
 
   if (!registration) {
@@ -134,9 +134,9 @@ export function resolve<T>(token: new (...args: any[]) => T): T {
     let newInstance: T;
     try {
       newInstance = registration.currentFactory();
-    } catch (err: any)
+    } catch (err: unknown)
     {
-      return throwError(`Error creating instance of ${token.name}: ${err.message}`);
+      return throwError(`Error creating instance of ${token.name}: ${(err as Error).message}`);
     } finally {
       // Always remove from stack, even if factory throws
       resolutionStack.delete(token);
@@ -149,7 +149,7 @@ export function resolve<T>(token: new (...args: any[]) => T): T {
   }
 
   // Return existing shared instance
-  return registration.instance;
+  return registration.instance!;
 }
 
 /**
@@ -175,7 +175,7 @@ export function replace<T>(
   if (options.useValue !== undefined) {
     newFactory = () => options.useValue as T;
   } else if (options.useClass) {
-    newFactory = () => resolve(options.useClass as new (...args: any[]) => T);
+    newFactory = () => resolve(options.useClass as new (...args: unknown[]) => T);
   } else if (options.useFactory) {
     newFactory = options.useFactory;
   } else {
