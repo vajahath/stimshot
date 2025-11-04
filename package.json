@@ -1,6 +1,6 @@
 {
 	"name": "stimshot",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "A dead-simple, modern, and lightweight (~4kb) Dependency Injection library for TypeScript",
 	"type": "module",
 	"license": "MIT",
