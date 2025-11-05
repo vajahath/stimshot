@@ -6,13 +6,11 @@
 
 A dead-simple, modern, and lightweight (~2kb) Dependency Injection library for TypeScript.
 
-### **Why another DI framework?**
+### Why another DI Library?
 
-Stimshot was inspired from InversifyJS, Tsyringe, InjectionJS (outside the context of Angular). These libraries have some fundamental issues when used with modern TypeScript.
+Stimshot draws inspiration from established **Dependency Injection (DI)** frameworks like **InversifyJS**, **Tsyringe**, and **InjectionJS**. However, a key limitation shared by these libraries is their reliance on legacy mechanisms that are incompatible with modern TypeScript best practices.
 
-Many existing DI libraries for TypeScript rely on the older experimental decorators and reflection libraries like `reflect-metadata`. This approach forces you to enable `emitDecoratorMetadata` in your `tsconfig.json`, which depends on TypeScript's type-information—information that is erased at compile time.
-
-Often this leads to runtime errors, especially when using the new [`import type` syntax](https://www.google.com/search?q=typescript+import+type+syntax). Most DI libraries were not designed with this in mind, and as a result, they fail to resolve dependencies correctly and lead to runtime issues.
+**The Problem with Reflection-Based DI**: Existing solutions commonly depend on **experimental decorators** and the `reflect-metadata` library. This forces users to enable `emitDecoratorMetadata` in their `tsconfig.json`. This approach is problematic because it relies on TypeScript's **compile-time type information**, which is inherently erased during compilation. This often results in runtime errors, as demonstrated by **[this example that builds but fails at execution](https://stackblitz.com/edit/stackblitz-starters-reuheznh?file=README.md)**. Most DI libraries fail to correctly handle the new **[`import type` syntax](https://www.google.com/search?q=typescript+import+type+syntax)**. Because this syntax explicitly signals a type-only import, reflection-based dependency resolution fails, leading to frustrating runtime issues.
 
 Stimshot was built with a different philosophy:
 
@@ -25,7 +23,7 @@ This library **does not** use or require `reflect-metadata` or `experimentalDeco
 
 ### Comparison with Other Libraries
 
-| Feature                     | stimshot | InversifyJS | Tsyringe | InjectionJS |
+|                      | stimshot | InversifyJS | Tsyringe | InjectionJS |
 |-----------------------------|:--------:|:-----------:|:--------:|:-----------:
 | reflect-metadata    |   ✅ Not needed   |      Yes ![minified size](https://badgen.net/bundlephobia/min/reflect-metadata)    |    Yes ![minified size](https://badgen.net/bundlephobia/min/reflect-metadata)    |      Yes ![minified size](https://badgen.net/bundlephobia/min/reflect-metadata)     |
 | Library size  | ✅ ![minified size](https://badgen.net/bundlephobia/min/stimshot)     | ![minified size](https://badgen.net/bundlephobia/min/inversify)       | ![minified size](https://badgen.net/bundlephobia/min/tsyringe)  | ![minified size](https://badgen.net/bundlephobia/min/injection-js)  |
